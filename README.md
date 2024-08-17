@@ -17,7 +17,7 @@ This repository contains all the GitHub Actions that are useful for a variety of
 different ports across the Catppuccin organisation.
 
 Reusable workflows are also stored in the
-[.github/workflows](./github/workflows) directory.
+[.github/workflows](./.github/workflows) directory.
 
 <!-- The FAQ section is optional. Remove if needed.-->
 

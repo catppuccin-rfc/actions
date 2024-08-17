@@ -1,0 +1,53 @@
+name: Update catppuccin/vscode-icons
+
+on:
+  workflow_call:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: "recursive"
+
+      - name: Update submodule
+        id: update_submodule
+        run: |
+          escape_url() {
+            echo "$1" | sed 's/\./[.]/g' | sed 's/\//\\\//g'
+          }
+
+          get_submodule_name() {
+            escape_url $(git config -f .gitmodules -l | awk -F '.url=' "/$1/ { print \$1; }")
+          }
+
+          get_submodule_path() {
+            git config -f .gitmodules -l |
+              awk -F '.url=' "/$1[.]path/ { print \$1; }" |
+              awk -F '.path=' '{ print $2; }'
+          }
+
+          INPUT_URL=$(escape_url "https://github.com/catppuccin/vscode-icons.git")
+          submodule_name=$(get_submodule_name "$INPUT_URL")
+          submodule_path=$(get_submodule_path "$submodule_name")
+
+          git submodule update --remote
+          cd "$submodule_path"
+          tag=$(git describe --abbrev=0 --tags)
+          git reset --hard "$tag"
+          echo "latest_tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "feat: update vscode-icons submodule to ${{ steps.update_submodule.outputs.latest_tag }}"
+          branch: "feat/update-vscode-icons-${{ steps.update_submodule.outputs.latest_tag }}"
+          title: "feat: update vscode-icons submodule to ${{ steps.update_submodule.outputs.latest_tag }}"
+          body: |
+            This automated PR updates the [catppuccin/vscode-icons](https://github.com/catppuccin/vscode-icons) submodule to  ${{ steps.update_submodule.outputs.latest_tag }}.

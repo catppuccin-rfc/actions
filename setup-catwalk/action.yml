@@ -1,0 +1,22 @@
+name: Install catppuccin/catwalk
+description: "Install a specific version of catppuccin/catwalk"
+author: "Catppuccin Org <releases@catppuccin.com>"
+
+inputs:
+  catwalk-version:
+    description: "The version of catwalk to install. Use 'latest' to install the latest version, otherwise specify a version number according to the GitHub releases of catppuccin/catwalk."
+    default: "latest"
+
+outputs:
+  catwalk-path:
+    description: "The PATH where catwalk is installed."
+  catwalk-version:
+    description: "The catwalk version that is installed."
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: "image"
+  color: "green"

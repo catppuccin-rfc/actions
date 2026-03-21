@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/catppuccin/actions/compare/v1.1.1...v1.1.2) (2026-03-21)
+
+
+### Bug Fixes
+
+* **deps:** update actions/checkout action to v6 ([#10](https://github.com/catppuccin/actions/issues/10)) ([93a19b1](https://github.com/catppuccin/actions/commit/93a19b1402be6eb1811eab291cd9fc9a44dd249c))
+
 ## [1.1.1](https://github.com/catppuccin/actions/compare/v1.1.0...v1.1.1) (2025-05-03)
 
 

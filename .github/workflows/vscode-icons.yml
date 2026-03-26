@@ -29,7 +29,7 @@ jobs:
           strategy: "tag"
 
       - name: Create PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         if: ${{ steps.submodules.outputs[format('{0}--updated', inputs.path)] }}
         with:
           commit-message: "feat: update catppuccin/vscode-icons to ${{ steps.submodules.outputs[format('{0}--latestTag', inputs.path)] }}"
